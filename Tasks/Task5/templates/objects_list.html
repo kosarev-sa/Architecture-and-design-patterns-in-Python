@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Заявки
+{% endblock %}
+
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+
+{% block body %}
+<div id="header">
+    Создание заявки
+</div>
+<div id="content">
+    <div>
+        <a href="/obj_manager/">назад к заявкам</a>
+    </div>
+    <br><br>
+    <div>
+        <a href="/create-subcategory/?id={{id}}">Создать подкатегорию (например, "город Нижний Новгород")</a>
+        <br><br>
+        <a href="/create-object/?id={{id}}">Создать новый объект</a>
+        <br><br>
+        <h2>Список подкатегорий для категории "{{name}}":</h2>
+        {% for item in objects_list1 %}
+        <li>           
+            {{item.name}} <span>Количество объектов: {{item.objects_count()}}</span>
+            <a href="/objects-list/?id={{item.id}}">Показать объекты</a>
+        </li>
+        {% endfor %}
+        <br><br>
+        <h2>Список объектов для категории "{{name}}":</h2>
+        {% for item in objects_list2 %}
+        <li>
+            {{item.name}} <span><a href="/copy-object/?name={{item.name}}">скопировать</a></span>
+        </li>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer%}
+{% include "inc-footer.html" %}
+{% endblock %}

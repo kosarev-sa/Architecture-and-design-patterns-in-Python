@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+Заявки
+{% endblock %}
+
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+
+{% block body %}
+<div id="header">
+    Создание заявки
+</div>
+<div id="content">
+    <a href="/obj_manager/">назад</a>
+
+    <h2>Список категорий</h2>
+    <ul>
+
+        {% for item in objects_list %}
+        <li>
+            {{item.name}} <span>Количество объектов: {{item.objects_count()}}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+	<div>
+		<li><a href="/objects-list/">Список объектов</a></li>
+		<li><a href="/create-object/">Создать объект</a></li>
+	</div>
+</div>
+{% endblock %}
+
+{% block footer%}
+{% include "inc-footer.html" %}
+{% endblock %}

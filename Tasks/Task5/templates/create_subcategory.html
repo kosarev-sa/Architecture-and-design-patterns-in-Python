@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Заявки
+{% endblock %}
+
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+
+{% block body %}
+<div id="header">
+    Создание заявки
+</div>
+<div id="content">
+    <div>
+        <a href="/objects-list/?id={{id}}">назад</a>
+    </div>
+    <br>
+    <div>
+        <h2>Создание подкатегории для текущей категории "{{name}}"</h2>
+        <form method="post">
+            <input type="text" name="name" placeholder="Название">
+            <button type="submit">Сохранить и вернуться к списку объектов</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer%}
+{% include "inc-footer.html" %}
+{% endblock %}
