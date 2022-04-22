@@ -20,8 +20,8 @@ class Buyer(User):
 # порождающий паттерн Абстрактная фабрика - фабрика пользователей
 class UserFactory:
     types = {
-        'sale': Saler,
-        'buy': Buyer
+        'saler': Saler,
+        'buyer': Buyer
     }
 
     # порождающий паттерн Фабричный метод
@@ -70,9 +70,6 @@ class Category:
         Category.auto_id += 1
         self.name = name
         self.category = category
-        self.subcategories = []
-        if category:
-            self.category.subcategories.append(self)
         self.objects = []
 
     def objects_count(self):
@@ -103,7 +100,6 @@ class Engine:
         self.buyers = []
         self.objects = []
         self.categories = []
-        self.subcategories = []
 
     @staticmethod
     def create_user(type_):

@@ -15,15 +15,15 @@ from views import routes
 #         return self.app(environ, start_response)
 
 
-class FakeApp:
-    def __call__(self, environ, start_response):
-        start_response('200 OK', [('Content-Type', 'text/html')])
-        return [b'Hello from Fake!']
+# class FakeApp:
+#     def __call__(self, environ, start_response):
+#         start_response('200 OK', [('Content-Type', 'text/html')])
+#         return [b'Hello from Fake!']
 
 
-# app = SiriusFramework(routes, fronts)
+app = SiriusFramework(routes, fronts)
 # app = SiriusFrameworkDebugVersion(routes, fronts)
-app = FakeApp()
+# app = FakeApp()
 
 HOST = '127.0.0.1'
 PORT = 8080

@@ -45,12 +45,11 @@ class Realty:
 
 
 # контроллер - менеджер объектов
-@AppRouteClassDec(routes=routes, url='/obj_manager/')
+@AppRouteClassDec(routes=routes, url='/obj-manager/')
 class ObjManager:
     @DebugTimeDec(cls_name='ObjManager')
     def __call__(self, request):
-        return '200 OK', render('obj_manager.html', objects_list1=site.categories,
-                                objects_list2=site.subcategories,
+        return '200 OK', render('obj_manager.html', categories_list=site.categories,
                                 style=request.get('style1', None),
                                 date=request.get('date', None),
                                 time=request.get('time', None),
@@ -85,30 +84,30 @@ class CreateObject:
     def __call__(self, request):
         if request['method'] == 'POST':
             # метод пост
+            print(request)
             data = request['data']
 
             name = data['name']
             name = site.decode_value(name)
 
             category = None
+
             if self.category_id != -1:
                 category = site.find_category_by_id(int(self.category_id))
-
                 object = site.create_object('Квартира', name, category)
                 site.objects.append(object)
             return '200 OK', render('objects_list.html', style=request.get('style1', None),
                                     date=request.get('date', None),
                                     time=request.get('time', None),
-                                    objects_list2=category.objects,
-                                    objects_list1=category.subcategories,
+                                    objects_list=category.objects,
                                     name=category.name,
                                     id=category.id,
                                     )
+
         else:
             try:
                 self.category_id = int(request['request_params']['id'])
                 category = site.find_category_by_id(int(self.category_id))
-
                 return '200 OK', render('create_object.html', style=request.get('style1', None),
                                         date=request.get('date', None),
                                         time=request.get('time', None),
@@ -122,6 +121,7 @@ class CreateObject:
 # контроллер - создать категорию
 @AppRouteClassDec(routes=routes, url='/create-category/')
 class CreateCategory:
+
     @DebugTimeDec(cls_name='CreateCategory')
     def __call__(self, request):
         if request['method'] == 'POST':
@@ -133,7 +133,6 @@ class CreateCategory:
             name = site.decode_value(name)
 
             category_id = data.get('category_id')
-
             category = None
             if category_id:
                 category = site.find_category_by_id(int(category_id))
@@ -145,7 +144,7 @@ class CreateCategory:
             return '200 OK', render('obj_manager.html', style=request.get('style1', None),
                                     date=request.get('date', None),
                                     time=request.get('time', None),
-                                    objects_list=site.categories,
+                                    categories_list=site.categories,
                                     )
         else:
             categories = site.categories
@@ -156,60 +155,18 @@ class CreateCategory:
                                     )
 
 
-# контроллер - создать подкатегорию
-@AppRouteClassDec(routes=routes, url='/create-subcategory/')
-class CreateSubcategory:
-    category_id = -1
-
-    @DebugTimeDec(cls_name='CreateSubcategory')
-    def __call__(self, request):
-        if request['method'] == 'POST':
-            # метод пост
-            print(request)
-            data = request['data']
-
-            name = data['name']
-            name = site.decode_value(name)
-
-            category = None
-            if self.category_id != -1:
-                category = site.find_category_by_id(int(self.category_id))
-                subcategory = site.create_category(name, category)
-                site.subcategories.append(subcategory)
-
-            return '200 OK', render('objects_list.html', style=request.get('style1', None),
-                                    date=request.get('date', None),
-                                    time=request.get('time', None),
-                                    objects_list2=category.objects,
-                                    objects_list1=category.subcategories,
-                                    name=category.name,
-                                    id=category.id,
-                                    )
-        else:
-            try:
-                self.category_id = int(request['request_params']['id'])
-                category = site.find_category_by_id(int(self.category_id))
-
-                return '200 OK', render('create_subcategory.html', style=request.get('style1', None),
-                                        date=request.get('date', None),
-                                        time=request.get('time', None),
-                                        name=category.name,
-                                        id=category.id,
-                                        )
-            except KeyError:
-                return '200 OK', 'No categories have been added yet'
-
-
 # контроллер - список категорий
 @AppRouteClassDec(routes=routes, url='/category-list/')
 class CategoryList:
     @DebugTimeDec(cls_name='CategoryList')
     def __call__(self, request):
         logger.log('Список категорий')
+        category = site.find_category_by_id(int(request['request_params']['id']))
         return '200 OK', render('category_list.html', style=request.get('style1', None),
                                 date=request.get('date', None),
                                 time=request.get('time', None),
-                                objects_list=site.categories,
+                                categories_list=site.categories,
+                                id=category.id
                                 )
 
 
@@ -220,7 +177,10 @@ class CopyObject:
     def __call__(self, request):
         request_params = request['request_params']
         try:
+
             name = request_params['name']
+            name = site.decode_value(name)
+
             old_object = site.get_object(name)
             if old_object:
                 new_name = f'copy_{name}'

@@ -34,7 +34,7 @@ class PostRequests:
     def get_wsgi_input_data(environ) -> bytes:
         str_content_length = environ.get('CONTENT_LENGTH')
         int_content_length = int(str_content_length) if str_content_length else 0
-        print(int_content_length) # 329
+        # print(int_content_length) # 329
         # Считываем данные, если они есть
         # print(f"{type(env['wsgi.input'])}") -> <class '_io.BufferedReader'>
         inputed_data = environ['wsgi.input'].read(int_content_length) if int_content_length > 0 else b''
@@ -44,7 +44,7 @@ class PostRequests:
         result = {}
         if data:
             data_str = data.decode(encoding='utf-8')
-            print(f'Декодированная строка: {data_str}')
+            # print(f'Декодированная строка: {data_str}')
             # Декодированная строка: name = % D0 % A1 % D0 % B5 % D1 % 80 % D0 % B3 % D0 % B5 % D0 % B9 & phone = 890099
             # 90909 & email = test % 40 mail.ru & location = nn & member = no & title_msg = % D0 % A5 % D0 % BE % D1 % 8
             # 7 % D1 % 83 + % D0 % BA % D0 % B2 % D0 % B0 % D1 % 80 % D1 % 82 % D0 % B8 % D1 % 80 % D1 % 83 & msg = % D0

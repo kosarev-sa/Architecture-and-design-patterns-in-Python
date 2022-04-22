@@ -13,14 +13,19 @@
     Создание заявки
 </div>
 <div id="content">
-    <a href="/obj_manager/">назад</a>
+    <a href="/obj-manager/">к заявкам</a>
 
-    <h2>Список категорий</h2>
+    <div>
+        <a href="/create-category/?id={{id}}">Создать новую подкатегорию (Например: "Нижний Новгород")</a>
+    </div>
+
+
+    <h2>Список категорий и подкатегорий</h2>
     <ul>
 
-        {% for item in objects_list %}
+        {% for item in categories_list %}
         <li>
-            {{item.name}} <span>Количество объектов: {{item.objects_count()}}</span>
+            {{item.category}}: {{item.name}}: <span>Количество объектов: {{item.objects_count()}}</span>
         </li>
         {% endfor %}
     </ul>
