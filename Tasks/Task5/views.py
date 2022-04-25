@@ -121,9 +121,11 @@ class CreateObject:
 # контроллер - создать категорию
 @AppRouteClassDec(routes=routes, url='/create-category/')
 class CreateCategory:
-
+    category_id = None
     @DebugTimeDec(cls_name='CreateCategory')
     def __call__(self, request):
+        if 'request_params' in request and 'id' in request['request_params']:
+           self.category_id = int(request['request_params']['id'])
         if request['method'] == 'POST':
             # метод пост
             print(request)
@@ -132,11 +134,11 @@ class CreateCategory:
             name = data['name']
             name = site.decode_value(name)
 
-            category_id = data.get('category_id')
+            # category_id = data.get('category_id')
             category = None
-            if category_id:
-                category = site.find_category_by_id(int(category_id))
-
+            if self.category_id:
+                category = site.find_category_by_id(int(self.category_id))
+            print("***", category)
             new_category = site.create_category(name, category)
 
             site.categories.append(new_category)
