@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Заявки
+{% endblock %}
+
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+
+{% block body %}
+<div id="header">
+    Создание заявки
+</div>
+
+<div id="content">
+    <div>
+        <a href="/create-category/">Создать новую категорию (Например: "Продажа")</a>
+    </div>
+    <div>
+        <h2>Список созданных категорий:</h2>
+        {% for item in categories_list %}
+        <li>
+            {{item.name}} <span>Количество объектов: {{item.objects_count()}}</span>
+            <a href="/objects-list/?id={{item.id}}">Показать объекты</a>
+            <a href="/category-list/?id={{item.id}}">Список подкатегорий и количество объектов</a>
+        </li>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer%}
+{% include "inc-footer.html" %}
+{% endblock %}
