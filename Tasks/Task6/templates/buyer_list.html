@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Покупатели
+{% endblock %}
+
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+
+{% block body %}
+<div id="header">
+    Покупатели
+</div>
+<div id="content">
+    <div>
+        <li>
+            <a href="/create-buyer/">Создать потенциального покупателя</a>
+        </li>
+        <li>
+            <a href="/add-buyer/">Закрепить покупателя за объектом</a>
+        </li>
+    </div>
+    <h2>Список покупателей:</h2>
+    <div>
+        {% for item in objects_list %}
+        <li>
+            {{item.name}}
+            {% for object in item.objects %}
+            {{object.name}}
+            {% endfor %}
+        </li>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer%}
+{% include "inc-footer.html" %}
+{% endblock %}
