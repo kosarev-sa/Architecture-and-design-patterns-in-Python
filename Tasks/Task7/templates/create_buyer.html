@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+Создание покупателя
+{% endblock %}
+
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+
+{% block body %}
+<div id="header">
+    Создание покупателя
+</div>
+<div id="content">
+    <div>
+        <li>
+            <a href="/buyer-list/">Список рассматривающих к покупке объект недвижимости</a>
+        </li>
+        <li>
+            <a href="/add-buyer/">Закрепить покупателя за объектом</a>
+        </li>
+    </div>
+    <div>
+        <h2>Создать покупателя:</h2>
+        <form method="post">
+            <input type="text" name="name" placeholder="Имя">
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer%}
+{% include "inc-footer.html" %}
+{% endblock %}
